@@ -1,0 +1,180 @@
+MongoDB:
+- MongoDB is a NoSQL database used to store and manage data.
+- It stores data in flexible, JSON-like documents instead of tables.
+- Data is stored in collections (similar to tables in SQL).
+- Each record is called a document (similar to a row).
+
+Key features:
+- Schema less
+- High performance
+- Scalable (supports horizontal scaling using sharding)
+- Flexible data model
+
+mongod (MongoDB Server / Engine):
+- It is the core server process of MongoDB that runs in the background.
+- Responsible for data storage, retrieval, and management.
+- Handles client requests, database operations, and query execution.
+- Manages memory, indexing, and concurrency control.
+- Stores data in BSON format (Binary JSON).
+- Acts as the main engine that processes all database activities.
+
+mongosh (MongoDB Shell):
+- A command-line interface (CLI) used to interact with MongoDB server.
+- Mainly used by developers and database administrators.
+- Allows execution of queries, commands, and scripts.
+- Supports JavaScript-based commands for database operations.
+- Returns results in JSON-like format.
+- Useful for quick testing, debugging, and automation.
+
+MongoDB Compass (GUI Tool):
+- A graphical user interface (GUI) for MongoDB.
+- Designed for users who prefer visual interaction instead of CLI.
+- Allows you to view, insert, update, and delete data easily.
+- Provides schema visualization and data insights.
+- Helps in building queries without writing code.
+- Supports performance analysis and indexing insights.
+- Useful for beginners and data analysts.
+
+
+NOTE:
+- By default, MongoDB runs on port 27017.
+- one MongoDB server can be connected to different clients at a time
+
+
+CRUD Operations:
+c- create, r - read, u - update, d - delete 
+create(Insert data) - Used to add new documents to a collection.
+read(Retrieve data) -  Used to fetch or view data from the database.
+update(Modify data) -  Used to change existing documents.
+delete(Remove data) - Used to remove documents from a collection.
+
+
+Basic MongoDB shell commands:(Run these in mongo db compass)
+1. show dbs →  List all databases
+2. use database_name →  Create or switch to a database
+3. show collections →   List all collections in the current DB
+4. db.dropDatabase() →  Drop current database
+
+
+NOTE:
+- db.getCollectionNames() → To list collections in Playground file 
+- db.createCollection(collection_name) → Used to create a new collection in the database
+
+Creating data:
+- Inside localhost : 27017, we can have multiple databases.
+- A database can contain multiple collections.
+- A collection can contain multiple documenets(JSON like data).
+
+- _id → used for identifying the document uniquely.
+- If the collection doesnot exists in the database in which we are trying to insert the data, then MongoDB creates it automatically and then adds it
+
+- We can insert data in 2 ways.
+1. insertOne():
+- Used to insert a single document.
+Syntax: db.collection_name.insertOne(document)
+2. insertMany():
+- Used to insert multiple documents at once.
+Syntax: db.collection_name.insertMany([document1, document2, ...])
+
+
+Reading the data:
+1. find():
+- Used to retrieve all documents from a collection
+Syntax: db.collection_name.find(query, projection)
+2. findOne():
+- Used to retrieve a single document.
+Syntax: db.collection_name.findOne(query, projection)
+
+Filtering the data:
+- We can filter the data based on our requirements using logical and comparison operators.
+
+Common Comparison Operators(Used to compare values in queries):
+$eq → equal to
+$ne → not equal to
+$gt → greater than
+$lt → less than
+$gte → greater than or equal to
+$lte → less than or equal to
+
+Common Logical Operators(Used to combine multiple conditions):
+$and → all conditions must be true
+$or → at least one condition must be true
+$not → negates a condition
+$nor → none of the conditions should be true
+
+Projection of data(returning required fields):
+- Projection is used to select specific fields from documents using find()
+- It helps to limit the data returned
+- Improves performance and readability
+Syntax: db.collection_name.find(query, projection)
+- Use 1 to show required fields (Include fields)
+- Use 0 to hide fields (Exclude fields)
+
+NOTE:
+_id Field Special Case
+-> _id is included by default
+-> To remove it, explicitly set to 0
+-> Cannot mix include (1) and exclude (0)
+-> Exception: _id can be excluded with inclusion
+
+Pagination:
+- Pagination is used to divide data into smaller parts (pages)
+- Helps in handling large datasets efficiently
+- Improves performance and user experience
+- It can be acheived using 3 methods:
+1. limit() → restrict number of documents
+2. skip() → skip a number of documents
+3. sort() -> sorts the data in ascending or descending order
+
+Ex:
+// Page 1
+db.students.find().skip(0).limit(5)
+
+// Page 2
+db.students.find().skip(5).limit(5)
+
+// Page 3
+db.students.find().skip(10).limit(5)
+
+sort() :
+- Sorting is used to arrange documents in a specific order
+Syntax: db.collection_name.find().sort({ field: order })
+Order vales : 
+1 → Ascending order (A → Z, 0 → 9)
+-1 → Descending order (Z → A, 9 → 0)
+ 
+
+Updating the data:
+- Updating data means modifying existing documents in a collection
+- It is done using update operations
+- Allows changing specific fields or entire documents
+- We can update the data in 2 ways:
+1. updateOne():
+- Updates one document
+Syntax: db.collection_name.updateOne(filter/selector, update)
+2. updateMany():
+- Updates multiple documents
+Syntax: db.collection_name.updateOne(filter/selector, update)
+
+Common operators used:
+1. $set → updating the specific fields
+2. $inc → increase value
+3. $unset → remove field
+4. $push → add a value to an array field to the end 
+5. $each → insert multiple values to an array to the end
+6. $pull → remove value(s) from an array field
+
+
+Deleting the data:
+- Deleting data means removing documents from a collection
+- It is done using delete operations
+- Can remove one or multiple documents
+- we can delete the documenets in 2 ways
+1. deleteOne():
+- Deletes one document
+Syntax: db.collection_name.deleteOne(filter)
+2. deleteMany():
+- Deletes multiple documents
+Syntax: db.collection_name.deleteOne(filter)
+
+
